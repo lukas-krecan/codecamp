@@ -5,13 +5,13 @@ import net.javacrumbs.codecamp.common.MessageStore;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
+import static net.javacrumbs.codecamp.common.TestSupport.NAME;
+import static net.javacrumbs.codecamp.common.TestSupport.THREAD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ChatStatisticsTest {
-    private static final String THREAD = "thread";
-    public static final String NAME = "name";
     private final MessageStore messageStore = mock(MessageStore.class);
     private final ChatStatistics chatStatistics = new ChatStatistics(messageStore);
 
