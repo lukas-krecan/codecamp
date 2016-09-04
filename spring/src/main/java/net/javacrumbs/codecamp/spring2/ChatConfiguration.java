@@ -15,18 +15,12 @@
  */
 package net.javacrumbs.codecamp.spring2;
 
-import net.javacrumbs.codecamp.common.InMemoryMessageStore;
-import net.javacrumbs.codecamp.common.MessageStore;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan
+@ComponentScan(basePackages = "net.javacrumbs.codecamp")
 public class ChatConfiguration {
 
-    @Bean
-    public MessageStore messageStore() {
-        return new InMemoryMessageStore();
-    }
+
 }

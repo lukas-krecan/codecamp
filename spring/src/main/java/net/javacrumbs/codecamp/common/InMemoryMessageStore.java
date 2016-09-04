@@ -15,16 +15,25 @@
  */
 package net.javacrumbs.codecamp.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Repository
 public class InMemoryMessageStore implements MessageStore{
     private final Map<String, List<Message>> messages = new ConcurrentHashMap<>();
 
+    private final Logger logger = LoggerFactory.getLogger(InMemoryMessageStore.class);
 
+    public InMemoryMessageStore() {
+        logger.info("action=initializing");
+    }
 
     @Override
     public List<Message> getMessagesIn(String thread) {
