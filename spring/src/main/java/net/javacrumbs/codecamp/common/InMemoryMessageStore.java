@@ -45,6 +45,11 @@ public class InMemoryMessageStore implements MessageStore{
         getOrCreateThread(thread).add(0, message);
     }
 
+    @Override
+    public void clear() {
+        messages.clear();
+    }
+
     private List<Message> getOrCreateThread(String thread) {
         return messages.computeIfAbsent(thread, t -> Collections.synchronizedList(new LinkedList<>()));
     }

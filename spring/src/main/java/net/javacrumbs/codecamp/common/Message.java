@@ -15,7 +15,11 @@
  */
 package net.javacrumbs.codecamp.common;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Message {
     private final String text;
@@ -23,9 +27,14 @@ public class Message {
     private final LocalDateTime time;
 
     public Message(String text, String name) {
+        this(text, name, LocalDateTime.now());
+    }
+
+    @JsonCreator
+    private Message(@JsonProperty("text") String text, @JsonProperty("name") String name, @JsonProperty("time") LocalDateTime time) {
         this.text = text;
         this.name = name;
-        this.time = LocalDateTime.now();
+        this.time = time;
     }
 
     public String getText() {
@@ -38,5 +47,29 @@ public class Message {
 
     public LocalDateTime getTime() {
         return time;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+            "text='" + text + '\'' +
+            ", name='" + name + '\'' +
+            ", time=" + time +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return Objects.equals(text, message.text) &&
+            Objects.equals(name, message.name) &&
+            Objects.equals(time, message.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(text, name, time);
     }
 }
