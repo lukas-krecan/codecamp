@@ -15,108 +15,65 @@
  */
 package net.javacrumbs.codecamp.common;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
+import java.util.concurrent.ConcurrentMap;
 
 @Repository
 public class FileMessageStore implements MessageStore {
     private final Logger logger = LoggerFactory.getLogger(FileMessageStore.class);
 
-    private final Path dir = Paths.get(System.getProperty("java.io.tmpdir"), "codecamp-demo");
+    private final DB db;
+    private final ConcurrentMap<String, List<Message>> messages;
 
-    private final ObjectMapper mapper;
+    private final byte[] lock = new byte[0];
 
     public FileMessageStore() {
-        logger.info("action=initializing dir={}", dir);
-        mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
+        logger.info("action=initializing");
+        db = DBMaker.fileDB("messages.db").make();
+        messages = (ConcurrentMap<String, List<Message>>) db.hashMap("map").createOrOpen();
     }
 
     @Override
     public List<Message> getMessagesIn(String thread) {
-        Path path = getThreadPath(thread);
-        if (Files.exists(path)) {
-            try {
-                List<Message> result = Files.lines(path).map(this::readLine).collect(Collectors.toList());
-                Collections.reverse(result);
-                return result;
-            } catch (IOException e) {
-                throw new IllegalStateException(e);
-            }
-        } else {
-            return Collections.emptyList();
+        synchronized (lock) {
+            return Collections.unmodifiableList(messages.getOrDefault(thread, Collections.emptyList()));
         }
     }
 
     @Override
-    public void addMessage(String thread, Message message) {
-        createDir();
-        try {
-            Files.write(getThreadPath(thread), (mapper.writeValueAsString(message) + "\n").getBytes(), APPEND, CREATE);
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
+    public void addMessage(String threadName, Message message) {
+        synchronized (lock) {
+            List<Message> thread = getOrCreateThread(threadName);
+            thread.add(0, message);
+            messages.put(threadName, thread);
+            db.commit();
         }
     }
 
     @Override
     public void clear() {
-        if (Files.exists(dir)) {
-            try {
-                Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
-                    @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        Files.delete(file);
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                    @Override
-                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                        Files.delete(dir);
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                });
-            } catch (IOException e) {
-                throw new IllegalStateException(e);
-            }
+        synchronized (lock) {
+            messages.clear();
         }
     }
 
-    private Path getThreadPath(String thread) {
-        return dir.resolve(thread + ".thread");
-    }
-
-    private Message readLine(String s) {
-        try {
-            return mapper.readValue(s, Message.class);
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
+    @Override
+    public void close() {
+        logger.info("action=closeDb");
+        synchronized (lock) {
+            db.close();
         }
     }
 
-
-    private void createDir() {
-        try {
-            Files.createDirectories(dir);
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+    private List<Message> getOrCreateThread(String thread) {
+        return messages.computeIfAbsent(thread, t -> Collections.synchronizedList(new LinkedList<>()));
     }
 }

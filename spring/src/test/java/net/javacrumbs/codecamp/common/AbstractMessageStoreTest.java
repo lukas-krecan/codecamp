@@ -1,5 +1,6 @@
 package net.javacrumbs.codecamp.common;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +18,11 @@ public abstract class AbstractMessageStoreTest {
     @Before
     public void clear() {
         messageStore.clear();
+    }
+
+    @After
+    public void close() {
+        messageStore.close();
     }
 
     @Test

@@ -15,13 +15,11 @@
  */
 package net.javacrumbs.codecamp.common;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Message {
+public class Message implements Serializable {
     private final String text;
     private final String name;
     private final LocalDateTime time;
@@ -30,8 +28,7 @@ public class Message {
         this(text, name, LocalDateTime.now());
     }
 
-    @JsonCreator
-    private Message(@JsonProperty("text") String text, @JsonProperty("name") String name, @JsonProperty("time") LocalDateTime time) {
+    private Message(String text, String name, LocalDateTime time) {
         this.text = text;
         this.name = name;
         this.time = time;

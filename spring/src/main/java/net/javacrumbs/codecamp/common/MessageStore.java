@@ -8,4 +8,6 @@ public interface MessageStore {
     void addMessage(String thread, Message message);
 
     void clear();
+
+    void close();
 }

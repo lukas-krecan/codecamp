@@ -50,6 +50,11 @@ public class InMemoryMessageStore implements MessageStore{
         messages.clear();
     }
 
+    @Override
+    public void close() {
+
+    }
+
     private List<Message> getOrCreateThread(String thread) {
         return messages.computeIfAbsent(thread, t -> Collections.synchronizedList(new LinkedList<>()));
     }
