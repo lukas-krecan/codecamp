@@ -15,13 +15,15 @@
  */
 package net.javacrumbs.codecamp.spring2;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(ChatConfiguration.class);
-        ChatStatistics chatStatistics = ctx.getBean(ChatStatistics.class);
-        System.out.println(chatStatistics.findLongestMessageInThread("thread"));
+        try (ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext(ChatConfiguration.class)) {
+            ctx.registerShutdownHook();
+            ChatStatistics chatStatistics = ctx.getBean(ChatStatistics.class);
+            System.out.println(chatStatistics.findLongestMessageInThread("thread"));
+        }
     }
 }

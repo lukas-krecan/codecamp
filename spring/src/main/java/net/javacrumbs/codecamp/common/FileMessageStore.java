@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PreDestroy;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -66,6 +67,7 @@ public class FileMessageStore implements MessageStore {
     }
 
     @Override
+    @PreDestroy
     public void close() {
         logger.info("action=closeDb");
         synchronized (lock) {
