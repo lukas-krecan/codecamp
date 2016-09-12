@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.spring1;
+package net.javacrumbs.codecamp.spring3;
 
-import net.javacrumbs.codecamp.common.Message;
+import net.javacrumbs.codecamp.common.FileMessageStore;
 import net.javacrumbs.codecamp.common.MessageStore;
+import net.javacrumbs.codecamp.service.ChatStatistics;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.Optional;
+@Configuration
+@ComponentScan(basePackageClasses = ChatStatistics.class)
+public class ChatConfiguration {
 
-import static java.util.Comparator.comparing;
-
-public class ChatStatistics {
-
-    private final MessageStore messageStore;
-
-    public ChatStatistics(MessageStore messageStore) {
-        this.messageStore = messageStore;
+    @Bean
+    public MessageStore messageStore() {
+        return new FileMessageStore();
     }
-
-    public Optional<Message> findLongestMessageInThread(String threadName) {
-        return messageStore.getMessagesIn(threadName).stream().max(comparing(m -> m.getText().length()));
-    }
-
 }

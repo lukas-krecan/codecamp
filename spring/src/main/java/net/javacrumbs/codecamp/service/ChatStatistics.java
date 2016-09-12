@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.spring2;
+package net.javacrumbs.codecamp.service;
 
 import net.javacrumbs.codecamp.common.Message;
 import net.javacrumbs.codecamp.common.MessageStore;

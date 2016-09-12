@@ -1,4 +1,4 @@
-package net.javacrumbs.codecamp.spring1;
+package net.javacrumbs.codecamp.service;
 
 import net.javacrumbs.codecamp.common.Message;
 import net.javacrumbs.codecamp.common.MessageStore;

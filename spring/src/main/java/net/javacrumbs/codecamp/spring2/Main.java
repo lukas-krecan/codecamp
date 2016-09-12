@@ -15,6 +15,7 @@
  */
 package net.javacrumbs.codecamp.spring2;
 
+import net.javacrumbs.codecamp.service.ChatStatistics;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
