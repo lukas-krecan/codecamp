@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PreDestroy;
+import java.io.File;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,8 +38,12 @@ public class FileMessageStore implements MessageStore {
     private final byte[] lock = new byte[0];
 
     public FileMessageStore() {
-        logger.info("action=initializing");
-        db = DBMaker.fileDB("messages.db").make();
+        this(new File("messages.db"));
+    }
+
+    public FileMessageStore(File file) {
+        logger.info("action=initializing file={}", file);
+        db = DBMaker.fileDB(file).make();
         messages = (ConcurrentMap<String, List<Message>>) db.hashMap("map").createOrOpen();
     }
 
