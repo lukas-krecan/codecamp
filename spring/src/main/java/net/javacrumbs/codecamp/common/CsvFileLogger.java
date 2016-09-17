@@ -21,16 +21,12 @@ import org.apache.commons.csv.CSVRecord;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,7 +37,7 @@ import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
 @Repository
-public class CsvFileLogger implements Logger {
+public class CsvFileLogger implements ReadableLogger {
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(CsvFileLogger.class);
     private final File file;
 

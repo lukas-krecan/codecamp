@@ -1,7 +1,7 @@
 package net.javacrumbs.codecamp.service;
 
-import net.javacrumbs.codecamp.common.Logger;
 import net.javacrumbs.codecamp.common.Message;
+import net.javacrumbs.codecamp.common.ReadableLogger;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ChatStatisticsTest {
-    private final Logger logger = mock(Logger.class);
+    private final ReadableLogger logger = mock(ReadableLogger.class);
     private final LogStatistics logStatistics = new LogStatistics(logger);
 
     @Test

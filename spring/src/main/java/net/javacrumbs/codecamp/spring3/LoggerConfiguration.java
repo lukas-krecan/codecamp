@@ -17,6 +17,7 @@ package net.javacrumbs.codecamp.spring3;
 
 import net.javacrumbs.codecamp.common.CsvFileLogger;
 import net.javacrumbs.codecamp.common.Logger;
+import net.javacrumbs.codecamp.common.ReadableLogger;
 import net.javacrumbs.codecamp.service.LogStatistics;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,10 +25,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackageClasses = LogStatistics.class)
-public class ChatConfiguration {
+public class LoggerConfiguration {
 
     @Bean
-    public Logger messageStore() {
+    public ReadableLogger logger() {
         return new CsvFileLogger();
     }
 }

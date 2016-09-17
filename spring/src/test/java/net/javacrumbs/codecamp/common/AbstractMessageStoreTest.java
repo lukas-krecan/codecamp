@@ -11,9 +11,9 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public abstract class AbstractMessageStoreTest {
 
-    private final Logger logger = createMessageStore();
+    private final ReadableLogger logger = createLogger();
 
-    protected abstract Logger createMessageStore();
+    protected abstract ReadableLogger createLogger();
 
     @Before
     public void clear() {

@@ -13,45 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.spring3;
+package net.javacrumbs.codecamp.spring5;
 
 
 import net.javacrumbs.codecamp.common.Logger;
 import net.javacrumbs.codecamp.common.Message;
-import net.javacrumbs.codecamp.service.LogStatistics;
+import net.javacrumbs.codecamp.common.ReadableLogger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import static net.javacrumbs.codecamp.common.Message.Severity.DEBUG;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = LoggerConfiguration.class)
-public class ConfigTest {
+@ContextConfiguration("classpath:loggerConfiguration.xml")
+public class XmlConfigTest {
 
     @Autowired
-    private LogStatistics logStatistics;
+    private Logger aggregateLogger;
 
     @Autowired
-    private Logger logger;
+    private List<ReadableLogger> loggers;
 
     @Test
-    public void shouldReturnLongest() {
-        Message message1 = new Message(DEBUG, "short");
+    public void shouldWriteToAllLoggers() {
+        Message message1 = new Message(DEBUG, "short,x");
         Message message2 = new Message(DEBUG, "long message");
 
-        logger.addMessage(message1);
-        logger.addMessage(message2);
+        aggregateLogger.addMessage(message1);
+        aggregateLogger.addMessage(message2);
 
-        assertThat(logStatistics.findLongestMessage()).contains(message2);
+        assertThat(loggers).hasSize(2);
+        loggers.forEach( l-> {
+            assertThat(l.getMessages()).containsExactly(message2, message1);
+        });
     }
 
     @Before
     public void clean() {
-        logger.clear();
+        aggregateLogger.clear();
     }
 }

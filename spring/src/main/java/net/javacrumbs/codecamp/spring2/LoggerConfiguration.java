@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = "net.javacrumbs.codecamp")
-public class ChatConfiguration {
+public class LoggerConfiguration {
 
 
 }

@@ -17,6 +17,7 @@ package net.javacrumbs.codecamp.service;
 
 import net.javacrumbs.codecamp.common.Logger;
 import net.javacrumbs.codecamp.common.Message;
+import net.javacrumbs.codecamp.common.ReadableLogger;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,9 +27,9 @@ import static java.util.Comparator.comparing;
 @Service
 public class LogStatistics {
 
-    private final Logger logger;
+    private final ReadableLogger logger;
 
-    public LogStatistics(Logger logger) {
+    public LogStatistics(ReadableLogger logger) {
         this.logger = logger;
     }
 

@@ -13,42 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.common;
+package net.javacrumbs.codecamp.spring5;
 
-import org.slf4j.LoggerFactory;
+import net.javacrumbs.codecamp.common.Logger;
+import net.javacrumbs.codecamp.common.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
-//@Repository
-public class InMemoryLogger implements ReadableLogger {
-    private final Deque<Message> messages = new ConcurrentLinkedDeque<>();
+@Component
+@Qualifier("aggregate")
+public class AggregateLogger implements Logger {
+    private final List<Logger> wrappedLoggers;
 
-    private final org.slf4j.Logger logger = LoggerFactory.getLogger(InMemoryLogger.class);
-
-    public InMemoryLogger() {
-        logger.info("action=initializing");
-    }
-
-    @Override
-    public List<Message> getMessages() {
-        return new LinkedList<>(messages);
+    @Autowired
+    public AggregateLogger(List<Logger> wrappedLoggers) {
+        this.wrappedLoggers = wrappedLoggers;
     }
 
     @Override
     public void addMessage(Message message) {
-        messages.addFirst(message);
+        wrappedLoggers.forEach(l -> l.addMessage(message));
     }
 
     @Override
     public void clear() {
-        messages.clear();
+        wrappedLoggers.forEach(Logger::clear);
     }
 
     @Override
     public void close() {
-
+        wrappedLoggers.forEach(Logger::close);
     }
 }

@@ -1,7 +1,7 @@
 package net.javacrumbs.codecamp.common;
 
 public class InMemoryLoggerTest extends AbstractMessageStoreTest {
-    protected Logger createMessageStore() {
+    protected ReadableLogger createLogger() {
         return new InMemoryLogger();
     }
 }

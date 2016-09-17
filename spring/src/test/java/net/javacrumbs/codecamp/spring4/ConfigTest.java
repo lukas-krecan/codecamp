@@ -30,7 +30,7 @@ import static net.javacrumbs.codecamp.common.Message.Severity.DEBUG;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ChatConfiguration.class)
+@ContextConfiguration(classes = LoggerConfiguration.class)
 public class ConfigTest {
 
     @Autowired
