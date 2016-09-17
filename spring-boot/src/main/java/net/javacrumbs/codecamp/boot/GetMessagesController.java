@@ -15,27 +15,24 @@
  */
 package net.javacrumbs.codecamp.boot;
 
-import net.javacrumbs.codecamp.boot.common.Message;
-import net.javacrumbs.codecamp.boot.common.MessageStore;
+import net.javacrumbs.codecamp.boot.common.ReadableLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class AddMessageController {
-    private final MessageStore messageStore;
+public class GetMessagesController {
+    private final ReadableLogger logger;
 
     @Autowired
-    public AddMessageController(MessageStore messageStore) {
-        this.messageStore = messageStore;
+    public GetMessagesController(ReadableLogger logger) {
+        this.logger = logger;
     }
 
-    @RequestMapping(path = "/threads/{thread}")
-    public List<Message> getMessages(@PathVariable String thread) {
-        return messageStore.getMessagesIn(thread);
+    @GetMapping(path = "/messages")
+    public ModelAndView getMessages() {
+        return new ModelAndView("showMessages", "messages", logger.getMessages());
     }
 
 }

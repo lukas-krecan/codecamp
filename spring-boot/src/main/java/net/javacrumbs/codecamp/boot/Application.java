@@ -15,8 +15,10 @@
  */
 package net.javacrumbs.codecamp.boot;
 
-import net.javacrumbs.codecamp.boot.common.FileMessageStore;
-import net.javacrumbs.codecamp.boot.common.MessageStore;
+import net.javacrumbs.codecamp.boot.common.CsvFileLogger;
+import net.javacrumbs.codecamp.boot.common.Logger;
+import net.javacrumbs.codecamp.boot.common.Message;
+import net.javacrumbs.codecamp.boot.common.ReadableLogger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,14 +28,18 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 
+import static net.javacrumbs.codecamp.boot.common.Message.Severity.INFO;
+
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
 public class Application {
 
     @Bean
-    public MessageStore messageStore(@Value("${db.file}") File file) { // Type conversion
-        return new FileMessageStore(file);
+    public ReadableLogger messageStore(@Value("${db.file}") File file) { // Type conversion
+        CsvFileLogger logger = new CsvFileLogger(file);
+        logger.addMessage(new Message(INFO, "Test message"));
+        return logger;
     }
 
     public static void main(String[] args) {

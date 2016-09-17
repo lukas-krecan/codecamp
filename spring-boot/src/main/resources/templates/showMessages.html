@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Log messages</title>
+</head>
+
+<body>
+    <span th:each="message : ${messages}">
+        <p th:text="${message.message}">Sample message</p>
+    </span>
+</body>
+</html>
