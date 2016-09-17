@@ -91,8 +91,8 @@ public class CsvFileLogger implements Logger {
     }
 
     @Override
-    @PreDestroy
     public void close() {
+        logger.info("action=closing");
     }
 
 }

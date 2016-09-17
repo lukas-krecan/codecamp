@@ -1,5 +1,6 @@
 package net.javacrumbs.codecamp.common;
 
+import javax.annotation.PreDestroy;
 import java.util.List;
 
 public interface Logger {
@@ -9,5 +10,6 @@ public interface Logger {
 
     void clear();
 
+    @PreDestroy
     void close();
 }
