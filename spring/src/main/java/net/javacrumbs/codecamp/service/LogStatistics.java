@@ -13,21 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.spring3;
+package net.javacrumbs.codecamp.service;
 
-import net.javacrumbs.codecamp.common.CsvFileLogger;
 import net.javacrumbs.codecamp.common.Logger;
-import net.javacrumbs.codecamp.service.LogStatistics;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import net.javacrumbs.codecamp.common.Message;
+import org.springframework.stereotype.Service;
 
-@Configuration
-@ComponentScan(basePackageClasses = LogStatistics.class)
-public class ChatConfiguration {
+import java.util.Optional;
 
-    @Bean
-    public Logger messageStore() {
-        return new CsvFileLogger();
+import static java.util.Comparator.comparing;
+
+@Service
+public class LogStatistics {
+
+    private final Logger logger;
+
+    public LogStatistics(Logger logger) {
+        this.logger = logger;
     }
+
+    public Optional<Message> findLongestMessage() {
+        return logger.getMessages().stream().max(comparing(m -> m.getMessage().length()));
+    }
+
 }

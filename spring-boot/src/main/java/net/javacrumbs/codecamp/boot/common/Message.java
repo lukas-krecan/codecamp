@@ -13,49 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.common;
+package net.javacrumbs.codecamp.boot.common;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Message implements Serializable {
-    public enum Severity {
-        DEBUG,
-        INFO,
-        ERROR
-    }
-    private final Severity severity;
-    private final String message;
-    private final Instant time;
+    private final String text;
+    private final String name;
+    private final LocalDateTime time;
 
-    public Message(Severity severity, String message) {
-        this(severity, message, Instant.now());
+    public Message(String text, String name) {
+        this(text, name, LocalDateTime.now());
     }
 
-    public Message(Severity severity, String message, Instant time) {
-        this.severity = severity;
-        this.message = message;
+    private Message(String text, String name, LocalDateTime time) {
+        this.text = text;
+        this.name = name;
         this.time = time;
     }
 
-    public Severity getSeverity() {
-        return severity;
+    public String getText() {
+        return text;
     }
 
-    public String getMessage() {
-        return message;
+    public String getName() {
+        return name;
     }
 
-    public Instant getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
     @Override
     public String toString() {
         return "Message{" +
-            "severity=" + severity +
-            ", message='" + message + '\'' +
+            "text='" + text + '\'' +
+            ", name='" + name + '\'' +
             ", time=" + time +
             '}';
     }
@@ -64,14 +59,14 @@ public class Message implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Message message1 = (Message) o;
-        return severity == message1.severity &&
-            Objects.equals(message, message1.message) &&
-            Objects.equals(time, message1.time);
+        Message message = (Message) o;
+        return Objects.equals(text, message.text) &&
+            Objects.equals(name, message.name) &&
+            Objects.equals(time, message.time);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(severity, message, time);
+        return Objects.hash(text, name, time);
     }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.common;
+package net.javacrumbs.codecamp.boot.common;
 
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -28,7 +28,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
-@Repository
 public class FileMessageStore implements MessageStore {
     private final Logger logger = LoggerFactory.getLogger(FileMessageStore.class);
 

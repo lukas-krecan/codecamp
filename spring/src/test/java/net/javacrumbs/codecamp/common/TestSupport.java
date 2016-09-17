@@ -17,6 +17,4 @@ package net.javacrumbs.codecamp.common;
 
 public class TestSupport {
 
-    public static final String THREAD = "thread";
-    public static final String NAME = "name";
 }

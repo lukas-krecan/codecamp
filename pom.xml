@@ -13,6 +13,7 @@
   <modules>
     <module>servlet</module>
     <module>spring</module>
+    <module>spring-boot</module>
   </modules>
   <dependencies>
     <dependency>

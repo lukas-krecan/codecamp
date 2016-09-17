@@ -16,20 +16,17 @@
 package net.javacrumbs.codecamp.spring3;
 
 
+import net.javacrumbs.codecamp.common.Logger;
 import net.javacrumbs.codecamp.common.Message;
-import net.javacrumbs.codecamp.common.MessageStore;
-import net.javacrumbs.codecamp.service.ChatStatistics;
-import org.junit.After;
+import net.javacrumbs.codecamp.service.LogStatistics;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static net.javacrumbs.codecamp.common.TestSupport.NAME;
-import static net.javacrumbs.codecamp.common.TestSupport.THREAD;
+import static net.javacrumbs.codecamp.common.Message.Severity.DEBUG;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,24 +34,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConfigTest {
 
     @Autowired
-    private ChatStatistics chatStatistics;
+    private LogStatistics logStatistics;
 
     @Autowired
-    private MessageStore messageStore;
+    private Logger logger;
 
     @Test
     public void shouldReturnLongest() {
-        Message message1 = new Message("short", NAME);
-        Message message2 = new Message("long message", NAME);
+        Message message1 = new Message(DEBUG, "short");
+        Message message2 = new Message(DEBUG, "long message");
 
-        messageStore.addMessage(THREAD, message1);
-        messageStore.addMessage(THREAD, message2);
+        logger.addMessage(message1);
+        logger.addMessage(message2);
 
-        assertThat(chatStatistics.findLongestMessageInThread(THREAD)).contains(message2);
+        assertThat(logStatistics.findLongestMessage()).contains(message2);
     }
 
     @Before
     public void clean() {
-        messageStore.clear();
+        logger.clear();
     }
 }

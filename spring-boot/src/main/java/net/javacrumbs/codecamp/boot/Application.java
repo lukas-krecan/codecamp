@@ -13,21 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.spring3;
+package net.javacrumbs.codecamp.boot;
 
-import net.javacrumbs.codecamp.common.CsvFileLogger;
-import net.javacrumbs.codecamp.common.Logger;
-import net.javacrumbs.codecamp.service.LogStatistics;
+import net.javacrumbs.codecamp.boot.common.FileMessageStore;
+import net.javacrumbs.codecamp.boot.common.MessageStore;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.File;
+
 @Configuration
-@ComponentScan(basePackageClasses = LogStatistics.class)
-public class ChatConfiguration {
+@EnableAutoConfiguration
+@ComponentScan
+public class Application {
 
     @Bean
-    public Logger messageStore() {
-        return new CsvFileLogger();
+    public MessageStore messageStore(@Value("${db.file}") File file) { // Type conversion
+        return new FileMessageStore(file);
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
     }
 }
+

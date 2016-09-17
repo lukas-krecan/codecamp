@@ -15,34 +15,31 @@
  */
 package net.javacrumbs.codecamp.common;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 //@Repository
-public class InMemoryMessageStore implements MessageStore{
-    private final Map<String, List<Message>> messages = new ConcurrentHashMap<>();
+public class InMemoryLogger implements Logger {
+    private final Deque<Message> messages = new ConcurrentLinkedDeque<>();
 
-    private final Logger logger = LoggerFactory.getLogger(InMemoryMessageStore.class);
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(InMemoryLogger.class);
 
-    public InMemoryMessageStore() {
+    public InMemoryLogger() {
         logger.info("action=initializing");
     }
 
     @Override
-    public List<Message> getMessagesIn(String thread) {
-        return Collections.unmodifiableList(messages.getOrDefault(thread, Collections.emptyList()));
+    public List<Message> getMessages() {
+        return new LinkedList<>(messages);
     }
 
     @Override
-    public void addMessage(String thread, Message message) {
-        getOrCreateThread(thread).add(0, message);
+    public void addMessage(Message message) {
+        messages.addFirst(message);
     }
 
     @Override
@@ -53,9 +50,5 @@ public class InMemoryMessageStore implements MessageStore{
     @Override
     public void close() {
 
-    }
-
-    private List<Message> getOrCreateThread(String thread) {
-        return messages.computeIfAbsent(thread, t -> Collections.synchronizedList(new LinkedList<>()));
     }
 }

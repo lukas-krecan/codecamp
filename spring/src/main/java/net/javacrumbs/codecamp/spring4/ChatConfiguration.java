@@ -15,9 +15,9 @@
  */
 package net.javacrumbs.codecamp.spring4;
 
-import net.javacrumbs.codecamp.common.FileMessageStore;
-import net.javacrumbs.codecamp.common.MessageStore;
-import net.javacrumbs.codecamp.service.ChatStatistics;
+import net.javacrumbs.codecamp.common.CsvFileLogger;
+import net.javacrumbs.codecamp.common.Logger;
+import net.javacrumbs.codecamp.service.LogStatistics;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,14 +25,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import java.io.File;
+import java.nio.file.Path;
 
 @Configuration
-@ComponentScan(basePackageClasses = ChatStatistics.class)
+@ComponentScan(basePackageClasses = LogStatistics.class)
 @PropertySource("app-config.properties")
 public class ChatConfiguration {
 
     @Bean
-    public MessageStore messageStore(@Value("${db.file}") File file) { // Type conversion
-        return new FileMessageStore(file);
+    public Logger messageStore(@Value("${db.file}") File file) { // Type conversion
+        return new CsvFileLogger(file);
     }
 }

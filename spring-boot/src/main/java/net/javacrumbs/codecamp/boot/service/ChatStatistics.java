@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.service;
+package net.javacrumbs.codecamp.boot.service;
 
-import net.javacrumbs.codecamp.common.Message;
-import net.javacrumbs.codecamp.common.MessageStore;
+import net.javacrumbs.codecamp.boot.common.Message;
+import net.javacrumbs.codecamp.boot.common.MessageStore;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

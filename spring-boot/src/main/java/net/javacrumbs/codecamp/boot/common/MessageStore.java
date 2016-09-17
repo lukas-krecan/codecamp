@@ -1,4 +1,4 @@
-package net.javacrumbs.codecamp.common;
+package net.javacrumbs.codecamp.boot.common;
 
 import java.util.List;
 

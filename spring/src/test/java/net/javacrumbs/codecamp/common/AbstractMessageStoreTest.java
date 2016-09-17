@@ -4,38 +4,38 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static net.javacrumbs.codecamp.common.TestSupport.NAME;
-import static net.javacrumbs.codecamp.common.TestSupport.THREAD;
+import static net.javacrumbs.codecamp.common.Message.Severity.DEBUG;
+import static net.javacrumbs.codecamp.common.Message.Severity.INFO;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 
 public abstract class AbstractMessageStoreTest {
 
-    private final MessageStore messageStore = createMessageStore();
+    private final Logger logger = createMessageStore();
 
-    protected abstract MessageStore createMessageStore();
+    protected abstract Logger createMessageStore();
 
     @Before
     public void clear() {
-        messageStore.clear();
+        logger.clear();
     }
 
     @After
     public void close() {
-        messageStore.close();
+        logger.close();
     }
 
     @Test
     public void newThreadShouldBeEmpty() {
-        assertThat(messageStore.getMessagesIn(THREAD)).isEmpty();
+        assertThat(logger.getMessages()).isEmpty();
     }
 
     @Test
     public void shouldBeAbleToAddAndRetreiveInReverseOrder() {
-        Message message1 = new Message("text1", NAME);
-        Message message2 = new Message("text2", NAME);
-        messageStore.addMessage(THREAD, message1);
-        messageStore.addMessage(THREAD, message2);
-        assertThat(messageStore.getMessagesIn(THREAD)).containsExactly(message2, message1);
+        Message message1 = new Message(DEBUG, "text1");
+        Message message2 = new Message(INFO, "text2");
+        logger.addMessage(message1);
+        logger.addMessage(message2);
+        assertThat(logger.getMessages()).containsExactly(message2, message1);
     }
 }

@@ -15,7 +15,7 @@
  */
 package net.javacrumbs.codecamp.spring2;
 
-import net.javacrumbs.codecamp.service.ChatStatistics;
+import net.javacrumbs.codecamp.service.LogStatistics;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -23,8 +23,8 @@ public class Main {
     public static void main(String[] args) {
         try (ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext(ChatConfiguration.class)) {
             ctx.registerShutdownHook();
-            ChatStatistics chatStatistics = ctx.getBean(ChatStatistics.class);
-            System.out.println(chatStatistics.findLongestMessageInThread("thread"));
+            LogStatistics logStatistics = ctx.getBean(LogStatistics.class);
+            System.out.println(logStatistics.findLongestMessage());
         }
     }
 }
