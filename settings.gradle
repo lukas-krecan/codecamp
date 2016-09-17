@@ -2,7 +2,3 @@ rootProject.name = 'codecamp'
 include ':servlet'
 include ':spring'
 include ':spring-boot'
-
-project(':servlet').projectDir = "$rootDir/servlet" as File
-project(':spring').projectDir = "$rootDir/spring" as File
-project(':spring-boot').projectDir = "$rootDir/spring-boot" as File
