@@ -1,0 +1,16 @@
+description = 'spring-boot'
+buildscript {
+    repositories {
+        maven { url "http://repo.maven.apache.org/maven2" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    }
+}
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.0.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '1.4.0.RELEASE'
+    compile group: 'org.mapdb', name: 'mapdb', version: '3.0.1'
+}
