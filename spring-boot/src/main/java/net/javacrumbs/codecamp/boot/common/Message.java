@@ -17,6 +17,7 @@ package net.javacrumbs.codecamp.boot.common;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 public class Message implements Serializable {
@@ -27,13 +28,13 @@ public class Message implements Serializable {
     }
     private final Severity severity;
     private final String message;
-    private final Instant time;
+    private final ZonedDateTime time;
 
     public Message(Severity severity, String message) {
-        this(severity, message, Instant.now());
+        this(severity, message, ZonedDateTime.now());
     }
 
-    public Message(Severity severity, String message, Instant time) {
+    public Message(Severity severity, String message, ZonedDateTime time) {
         this.severity = severity;
         this.message = message;
         this.time = time;
@@ -47,7 +48,7 @@ public class Message implements Serializable {
         return message;
     }
 
-    public Instant getTime() {
+    public ZonedDateTime getTime() {
         return time;
     }
 

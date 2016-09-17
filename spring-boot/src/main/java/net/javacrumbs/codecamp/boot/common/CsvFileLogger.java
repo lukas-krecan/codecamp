@@ -26,6 +26,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class CsvFileLogger implements ReadableLogger {
     }
 
     private static Message parseRecord(CSVRecord record) {
-        return new Message(Message.Severity.valueOf(record.get(0)), record.get(1), Instant.parse(record.get(2)));
+        return new Message(Message.Severity.valueOf(record.get(0)), record.get(1), ZonedDateTime.parse(record.get(2)));
     }
 
     @Override

@@ -25,6 +25,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 import java.io.File;
 
@@ -40,6 +41,11 @@ public class Application {
         CsvFileLogger logger = new CsvFileLogger(file);
         logger.addMessage(new Message(INFO, "Test message"));
         return logger;
+    }
+
+    @Bean
+    public Java8TimeDialect java8TimeDialect() {
+        return new Java8TimeDialect();
     }
 
     public static void main(String[] args) {
