@@ -41,7 +41,7 @@ public class ConfigTest {
 
     @Test
     public void shouldReturnLongest() {
-        Message message1 = new Message(DEBUG, "short");
+        Message message1 = new Message(DEBUG, "short,x");
         Message message2 = new Message(DEBUG, "long message");
 
         logger.addMessage(message1);
