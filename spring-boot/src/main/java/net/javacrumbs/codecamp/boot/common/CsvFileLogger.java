@@ -25,7 +25,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -69,7 +68,7 @@ public class CsvFileLogger implements ReadableLogger {
     @Override
     public void addMessage(Message message) {
         try {
-            String newRow = CSVFormat.RFC4180.format(message.getSeverity(), message.getMessage(), message.getTime());
+            String newRow = CSVFormat.RFC4180.format(message.getSeverity(), message.getText(), message.getTime());
             Files.write(file.toPath(), singletonList(newRow), APPEND, CREATE);
         } catch (IOException e) {
             throw new IllegalStateException(e);

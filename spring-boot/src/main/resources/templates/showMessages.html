@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -7,8 +6,9 @@
 </head>
 
 <body>
+    <div th:replace="messageForm :: message-form"></div>
     <span th:each="message : ${messages}">
-        <p><span th:text="${message.message}">Sample message</span> <span th:text="${#temporals.format(message.time, 'dd.MM.yyyy HH:mm:ss')}">2016-01-05</span></p>
+        <p><span th:text="${message.severity}">DEBUG</span> <span th:text="${message.text}">Sample message</span> <span th:text="${#temporals.format(message.time, 'dd.MM.yyyy HH:mm:ss')}">2016-01-05</span></p>
     </span>
 </body>
 </html>
