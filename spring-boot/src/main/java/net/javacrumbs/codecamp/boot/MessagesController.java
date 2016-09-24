@@ -57,7 +57,7 @@ public class MessagesController {
         }
 
         logger.addMessage(message);
-        return "redirect:messages";
+        return "redirect:/messages";
     }
 
     @ModelAttribute("messages")

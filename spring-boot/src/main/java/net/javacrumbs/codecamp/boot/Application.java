@@ -22,6 +22,7 @@ import net.javacrumbs.codecamp.boot.common.ReadableLogger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -31,9 +32,7 @@ import java.io.File;
 
 import static net.javacrumbs.codecamp.boot.common.Message.Severity.INFO;
 
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan
+@SpringBootApplication
 public class Application {
 
     @Bean
