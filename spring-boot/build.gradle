@@ -18,6 +18,8 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: springBootVersion
+    compile 'com.github.ben-manes.caffeine:caffeine:2.3.3'
     compile 'org.thymeleaf.extras:thymeleaf-extras-java8time:2.1.0.RELEASE'
     compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion

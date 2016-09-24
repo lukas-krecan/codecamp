@@ -19,6 +19,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,6 +51,7 @@ public class CsvFileLogger implements ReadableLogger {
     }
 
     @Override
+    @Cacheable(value = "messages", key = "'messages'")
     public List<Message> getMessages() {
         try(CSVParser parser = CSVFormat.RFC4180.parse(new FileReader(file))) {
             List<Message> result = parser.getRecords().stream().map(CsvFileLogger::parseRecord).collect(toList());
@@ -66,6 +69,7 @@ public class CsvFileLogger implements ReadableLogger {
     }
 
     @Override
+    @CacheEvict(value = "messages", key = "'messages'")
     public void addMessage(Message message) {
         try {
             String newRow = CSVFormat.RFC4180.format(message.getSeverity(), message.getText(), message.getTime());

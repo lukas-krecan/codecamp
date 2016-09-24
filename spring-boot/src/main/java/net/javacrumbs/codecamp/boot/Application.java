@@ -15,6 +15,8 @@
  */
 package net.javacrumbs.codecamp.boot;
 
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.CaffeineSpec;
 import net.javacrumbs.codecamp.boot.common.CsvFileLogger;
 import net.javacrumbs.codecamp.boot.common.Logger;
 import net.javacrumbs.codecamp.boot.common.Message;
@@ -23,16 +25,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
+import static java.util.concurrent.TimeUnit.MINUTES;
 import static net.javacrumbs.codecamp.boot.common.Message.Severity.INFO;
 
 @SpringBootApplication
+@EnableCaching(proxyTargetClass = true)
 public class Application {
 
     @Bean
