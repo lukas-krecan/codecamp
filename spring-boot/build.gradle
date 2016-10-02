@@ -1,12 +1,15 @@
-description = 'spring-boot'
 buildscript {
+    ext {
+        springBootVersion = '1.4.1.RELEASE'
+    }
     repositories {
-        maven { url "http://repo.maven.apache.org/maven2" }
+        mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
+
 apply plugin: 'spring-boot'
 
 bootRun {
@@ -14,19 +17,10 @@ bootRun {
 }
 
 dependencies {
-    def springBootVersion = '1.4.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: springBootVersion
-    compile 'com.github.ben-manes.caffeine:caffeine:2.3.3'
-    compile 'org.thymeleaf.extras:thymeleaf-extras-java8time:2.1.0.RELEASE'
-    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.10'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.5'
-    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.4.0'
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
-
+    compile('org.springframework.boot:spring-boot-devtools')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.apache.commons:commons-csv:1.4')
+    compile('org.thymeleaf.extras:thymeleaf-extras-java8time:2.1.0.RELEASE')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }

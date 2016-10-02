@@ -16,6 +16,7 @@
 package net.javacrumbs.codecamp.common;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Deque;
 import java.util.LinkedList;
