@@ -15,9 +15,9 @@
  */
 package net.javacrumbs.codecamp.service;
 
-import net.javacrumbs.codecamp.common.Logger;
 import net.javacrumbs.codecamp.common.Message;
 import net.javacrumbs.codecamp.common.ReadableLogger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,6 +29,7 @@ public class LogStatistics {
 
     private final ReadableLogger logger;
 
+    @Autowired
     public LogStatistics(ReadableLogger logger) {
         this.logger = logger;
     }

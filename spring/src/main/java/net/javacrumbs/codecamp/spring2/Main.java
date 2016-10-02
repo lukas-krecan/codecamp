@@ -21,8 +21,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Main {
     public static void main(String[] args) {
-        try (ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext(LoggerConfiguration.class)) {
-            ctx.registerShutdownHook();
+        try (ConfigurableApplicationContext ctx =
+                     new AnnotationConfigApplicationContext(LoggerConfiguration.class)) {
             LogStatistics logStatistics = ctx.getBean(LogStatistics.class);
             System.out.println(logStatistics.findLongestMessage());
         }

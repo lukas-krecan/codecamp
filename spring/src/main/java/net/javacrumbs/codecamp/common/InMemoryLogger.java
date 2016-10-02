@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-//@Repository
+//@Component
 public class InMemoryLogger implements ReadableLogger {
     private final Deque<Message> messages = new ConcurrentLinkedDeque<>();
 

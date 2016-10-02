@@ -11,13 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ChatStatisticsTest {
+public class LogStatisticsTest {
     private final ReadableLogger logger = mock(ReadableLogger.class);
     private final LogStatistics logStatistics = new LogStatistics(logger);
 
     @Test
     public void shouldReturnEmptyIfThreadNotFound() {
-        assertThat(logStatistics.findLongestMessage().isPresent()).isFalse();
+        assertThat(logStatistics.findLongestMessage()).isEmpty();
     }
 
     @Test
