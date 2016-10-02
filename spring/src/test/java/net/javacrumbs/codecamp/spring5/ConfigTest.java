@@ -28,6 +28,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.Map;
 
 import static net.javacrumbs.codecamp.common.Message.Severity.DEBUG;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,6 +44,9 @@ public class ConfigTest {
     @Autowired
     private List<ReadableLogger> loggers;
 
+    @Autowired
+    private Map<String, Logger> loggerMap;
+
     @Test
     public void shouldWriteToAllLoggers() {
         Message message1 = new Message(DEBUG, "short,x");
@@ -55,6 +59,8 @@ public class ConfigTest {
         loggers.forEach( l-> {
             assertThat(l.getMessages()).containsExactly(message2, message1);
         });
+
+        assertThat(loggerMap).hasSize(3);
     }
 
     @Before
