@@ -26,10 +26,10 @@ import java.util.List;
 @Component
 @Qualifier("aggregate")
 public class AggregateLogger implements Logger {
-    private final List<Logger> wrappedLoggers;
+    private final List<? extends Logger> wrappedLoggers;
 
     @Autowired
-    public AggregateLogger(List<Logger> wrappedLoggers) {
+    public AggregateLogger(List<? extends Logger> wrappedLoggers) {
         this.wrappedLoggers = wrappedLoggers;
     }
 
