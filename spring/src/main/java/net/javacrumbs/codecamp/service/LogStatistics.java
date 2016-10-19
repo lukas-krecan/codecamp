@@ -35,7 +35,8 @@ public class LogStatistics {
     }
 
     public Optional<Message> findLongestMessage() {
-        return logger.getMessages().stream().max(comparing(m -> m.getMessage().length()));
+        return logger.getMessages().stream()
+                .max(comparing(m -> m.getMessage().length()));
     }
 
 }

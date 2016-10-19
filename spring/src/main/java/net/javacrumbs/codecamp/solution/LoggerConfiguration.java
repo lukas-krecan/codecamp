@@ -13,16 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.codecamp.spring2;
+package net.javacrumbs.codecamp.solution;
 
+import net.javacrumbs.codecamp.common.CsvFileLogger;
+import net.javacrumbs.codecamp.common.InMemoryLogger;
+import net.javacrumbs.codecamp.common.ReadableLogger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+import java.io.File;
 
 @Configuration
-@ComponentScan(basePackages = {"net.javacrumbs.codecamp.common",
-        "net.javacrumbs.codecamp.service"}
-)
+@PropertySource("app-config.properties")
+@ComponentScan
 public class LoggerConfiguration {
 
+    @Bean
+    public ReadableLogger fileLogger(@Value("${db.file}") File file) { // Type conversion
+        return new CsvFileLogger(file);
+    }
+
+    @Bean
+    public ReadableLogger inMemoryLogger() {
+        return new InMemoryLogger();
+    }
 
 }

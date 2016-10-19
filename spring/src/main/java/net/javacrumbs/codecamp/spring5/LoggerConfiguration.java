@@ -42,4 +42,5 @@ public class LoggerConfiguration {
     public ReadableLogger inMemoryLogger() {
         return new InMemoryLogger();
     }
+
 }
